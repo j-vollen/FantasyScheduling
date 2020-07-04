@@ -34,6 +34,11 @@ for user in users:
 # 2: rivals must play each other in selected rivalry week
 rivalry_constraints = [games[rivalry][rivalry_week] == 1 for rivalry in rivalries]
 
+# 3: game spacing constraints(teams should not play twice in any consecutive group of 3 weeks
+# maximum one game between any matchup of two teams in 3-week span
+spacing_constraints = [schedule[week]+schedule[week+1]+schedule[week+2] <= 1
+                       for week in range(numWeeks-2) # looping over weeks
+                       for schedule in games.values()] # looping over matchups' schedules
 
 # create problem, objective function is trivial
-#scheduling_problem = cp.Problem(cp.Maximize(0), [self_play_constraints, spacing_constraints, rivalry_constraints, division_constraints])
+#scheduling_problem = cp.Problem(cp.Maximize(0), [one_game_constraints, rivalry_constraints, spacing_constraints, division_constraints])
