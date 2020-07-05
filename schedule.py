@@ -26,7 +26,6 @@ games = {key: cp.Variable(numWeeks, boolean=True) for key in combinations(users,
 
 # CONSTRAINTS
 # 1: one game per team per week
-#one_game_constraints = np.empty((0,numTeams*numWeeks))
 one_game_constraints = []
 for user in users:
     # for each team, pick out the matchups they're involved in
@@ -40,7 +39,7 @@ for user in users:
 # 2: rivals must play each other in selected rivalry week
 rivalry_constraints = [games[rivalry][rivalry_week-1] == 1 for rivalry in rivalries]
 
-# 3: game spacing constraints(teams should not play twice in any consecutive group of 3 weeks
+# 3: game spacing constraints
 # maximum one game between any matchup of two teams in 3-week span
 spacing_constraints = [schedule[week]+schedule[week+1]+schedule[week+2] <= 1
                        for week in range(numWeeks-2) # looping over weeks
