@@ -15,7 +15,7 @@ divisions = {
     # Second division
     "jeremy": 2, "miller": 2, "simon": 2, "justin": 2, "greg": 2}
 user_team_map = {"kevin": "Professor Teabag", "chris": "1503 Sequoia Trail",
-                 "justin": "bottom bitches", "robert": "Bulgogi", "greg": "Burrito House",
+                 "justin": "Bottom Bitches", "robert": "Bulgogi", "greg": "Burrito House",
                  "simon": "Champ", "joe": "Hareem Kunt", "jeremy": "Hike School",
                  "sam": "Pepper Brooks", "miller": "Salmon Sisters"}
 
@@ -30,10 +30,10 @@ games = {key: cp.Variable(numWeeks, boolean=True) for key in combinations(users,
 one_game_constraints = []
 for user in users:
     # for each team, pick out the matchups they're involved in
-    matchups = {key: value for (key, value) in games
+    matchups = {key: value for key, value in games.items()
                 if key[0] == user or key[1] == user}
     # sum of all matchups must be equal to 1 for each individual week, thus we get numWeeks constraints
-    new_constraints = [cp.sum([value[week] for key, value in matchups]) == 1
+    new_constraints = [cp.sum([value[week] for key, value in matchups.items()]) == 1
                        for week in range(numWeeks)]
     one_game_constraints.extend(new_constraints)
 
@@ -51,7 +51,7 @@ division_constraints = \
     [cp.sum(weeks) == 1 + (divisions[matchup[0]] == divisions[matchup[1]])
      for matchup, weeks in games.items()]
 
-constraint_lists = [rivalry_constraints, spacing_constraints, division_constraints]
+constraint_lists = [one_game_constraints, rivalry_constraints, spacing_constraints, division_constraints]
 constraints = [c for sublist in constraint_lists for c in sublist]
 
 # SOLVE
@@ -73,3 +73,5 @@ for week in range(numWeeks):
             f.writelines(matchup_str)
     f.write('\n')
 f.close()
+
+# To-dos: since there is no unique solution, add functionality so we can set a seed and get a different solution
