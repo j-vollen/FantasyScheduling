@@ -35,10 +35,10 @@ while len(remaining_teams) > 1:
     tup = (rand1, rand2)
     ood_extra.append(tup)
 
-user_team_map = {"kevin": "Professor Teabag", "chris": "1503 Sequoia Trail",
-                 "justin": "Bottom Bitches", "robert": "Bulgogi", "greg": "Burrito House",
-                 "simon": "Champ", "joe": "Hareem Kunt", "jeremy": "Hike School",
-                 "sam": "Pepper Brooks", "miller": "Salmon Sisters"}
+user_team_map = {"kevin": "Whistlin' Willy", "chris": "Fauci's Footballers",
+                 "justin": "Bottom Bitches", "robert": "Pancit", "greg": "Miss Downes",
+                 "simon": "Pickle Rick", "joe": "Ma Homies", "jeremy": "OH DESTOYED",
+                 "sam": "Dumpster Fire", "miller": "Joey Crack"}
 
 
 # DEFINE DECISION VARIABLES
@@ -58,8 +58,7 @@ for user in users:
     one_game_constraints.extend(new_constraints)
 
 # 2: rivals must play each other in selected rivalry week;
-# note this will have bugs if the rivalry tuples are not in the arbitrary order
-# picked by the generation of combinations in the assignment of "games"
+# note this will have bugs if the rivalry tuples are not in the lexicographic order of 'users' list
 rivalry_constraints = [games[rivalry][rivalry_week-1] == 1 for rivalry in rivalries]
 
 # 3: game spacing constraints
