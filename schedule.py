@@ -20,12 +20,13 @@ numTeams, numWeeks = 10, 14
 rivalry_week = 12
 # users names, rivalry matchups, and map from users to teams if needed
 users = np.array(["kevin", "jeremy", "robert", "miller", "simon", "joe", "greg", "justin", "sam", "chris"])
-rivalries = [("kevin", "greg"), ("robert", "chris"), ("miller", "joe"), ("jeremy", "justin"), ("simon", "sam")]
+rivalries = [("jeremy", "greg"), ("robert", "joe"), ("kevin", "chris"), ("justin", "sam"), ("miller", "simon")]
 divisions = {
     # First division
-    "miller": 1, "simon": 1, "jeremy": 1, "justin": 1, "chris": 1,
+    "miller": 1, "robert": 1, "jeremy": 1, "sam": 1, "joe": 1,
     # Second division
-    "joe": 2, "sam": 2, "robert": 2, "kevin": 2, "greg": 2}
+    "simon": 2, "chris": 2, "justin": 2, "kevin": 2, "greg": 2}
+
 # create out-of-division (OOD) matchups that play twice; use rivalries if ood, otherwise just pick randomly
 ood_extra = [rivalry for rivalry in rivalries if divisions[rivalry[0]] != divisions[rivalry[1]]]
 remaining_teams = flatten([[rivalry[0], rivalry[1]] for rivalry in rivalries if rivalry not in ood_extra])
@@ -35,10 +36,10 @@ while len(remaining_teams) > 1:
     tup = (rand1, rand2)
     ood_extra.append(tup)
 
-user_team_map = {"kevin": "Whistlin' Willy", "chris": "Fauci's Footballers",
-                 "justin": "Bottom Bitches", "robert": "Pancit", "greg": "Miss Downes",
-                 "simon": "Pickle Rick", "joe": "Ma Homies", "jeremy": "OH DESTOYED",
-                 "sam": "Dumpster Fire", "miller": "Joey Crack"}
+user_team_map = {"kevin": "Hare Club for Men", "chris": "Led Tasso",
+                 "justin": "Bottom Bitches", "robert": "Chicken adobo", "greg": "Smitty Werbenjagermanjensen",
+                 "simon": "ChuSerious", "joe": "Haywood Jablowme", "jeremy": "CCH Pounder",
+                 "sam": "Dumpster Fire", "miller": "Keith Urban"}
 
 
 # DEFINE DECISION VARIABLES
@@ -85,6 +86,8 @@ scheduling_problem.solve(solver='GLPK_MI')
 
 # WRITE
 f = open('result.txt', 'r+')
+f.seek(0)
+f.truncate()
 for week in range(numWeeks):
     f.writelines(['Week ', str(week+1), ' Matchups:\n'])
     for matchup, schedule in games.items():
@@ -95,4 +98,6 @@ for week in range(numWeeks):
     f.write('\n')
 f.close()
 
-# To-dos: since there is no unique solution, add functionality so we can set a seed and get a different solution
+# To-dos:
+# For some reason, the program only finds a solution sometimes. Occasionally, it prints an empty solution. would be good to know why.. 
+# since there is no unique solution, add functionality so we can set a seed and get a different solution
