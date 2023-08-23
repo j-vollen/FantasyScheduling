@@ -21,32 +21,34 @@ rivalry_week = 12
 rivalry_week2 = 1
 # users names, rivalry matchups, and map from users to teams if needed
 users = np.array(["kevin", "jeremy", "robert", "miller", "simon", "joe", "greg", "justin", "sam", "chris"])
-rivalries = [("jeremy", "greg"), ("robert", "joe"), ("kevin", "chris"), ("justin", "sam"), ("miller", "simon")]
+rivalries = [("jeremy", "miller"), ("joe", "sam"), ("kevin", "greg"), ("justin", "chris"), ("robert", "simon")]
 divisions = {
     # First division
-    "miller": 1, "robert": 1, "jeremy": 1, "sam": 1, "joe": 1,
+    "kevin": 1, "robert": 1, "jeremy": 1, "simon": 1, "greg": 1,
     # Second division
-    "simon": 2, "chris": 2, "justin": 2, "kevin": 2, "greg": 2}
+    "sam": 2, "chris": 2, "justin": 2, "miller": 2, "joe": 2}
 
 # create out-of-division (OOD) matchups that play twice; use rivalries if ood, otherwise just pick randomly
 ood_extra = [rivalry for rivalry in rivalries if divisions[rivalry[0]] != divisions[rivalry[1]]]
 remaining_teams = flatten([[rivalry[0], rivalry[1]] for rivalry in rivalries if rivalry not in ood_extra])
-while len(remaining_teams) > 1:
-    rand1 = pop_random(remaining_teams)
-    rand2 = pop_random(remaining_teams)
+remaining_div1 = [team for team in remaining_teams if divisions[team]==1]
+remaining_div2 = [team for team in remaining_teams if divisions[team]==2]
+while ( len(remaining_div1) > 1 and len(remaining_div2) > 1 ) :
+    rand1 = pop_random(remaining_div1)
+    rand2 = pop_random(remaining_div2)
     tup = (rand1, rand2)
     ood_extra.append(tup)
 
-user_team_map = {"kevin": "Hare Club for Men", 
-                "chris": "Led Tasso",
+user_team_map = {"kevin": "The Crimson Chins", 
+                "chris": "Seattle Sex Panthers",
                 "justin": "Bottom Bitches", 
-                "robert": "Dave Savage Band",
-                "greg": "Smitty Werbenjagermanjensen",
-                "simon": "Adam Schefter",
-                "joe": "Haywood Jablowme",
-                "jeremy": "CCH Pounder",
+                "robert": "Barbie",
+                "greg": "The Jagaloons",
+                "simon": "Immunized",
+                "joe": "Max Keeble",
+                "jeremy": "Fixin' for a Mixon",
                 "sam": "Dumpster Fire",
-                "miller": "Keith Urban"}
+                "miller": "J.P. Prewitt"}
 
 
 # DEFINE DECISION VARIABLES
