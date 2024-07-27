@@ -21,12 +21,12 @@ rivalry_week = 12
 rivalry_week2 = 1
 # users names, rivalry matchups, and map from users to teams if needed
 users = np.array(["kevin", "jeremy", "robert", "miller", "simon", "joe", "greg", "justin", "sam", "chris"])
-rivalries = [("jeremy", "miller"), ("joe", "sam"), ("kevin", "greg"), ("justin", "chris"), ("robert", "simon")]
+rivalries = [("jeremy", "greg"), ("kevin", "joe"), ("miller", "justin"), ("sam", "chris"), ("robert", "simon")]
 divisions = {
     # First division
-    "kevin": 1, "robert": 1, "jeremy": 1, "simon": 1, "greg": 1,
+    "kevin": 1, "miller": 1, "jeremy": 1, "simon": 1, "sam": 1,
     # Second division
-    "sam": 2, "chris": 2, "justin": 2, "miller": 2, "joe": 2}
+    "greg": 2, "chris": 2, "justin": 2, "robert": 2, "joe": 2}
 
 # create out-of-division (OOD) matchups that play twice; use rivalries if ood, otherwise just pick randomly
 ood_extra = [rivalry for rivalry in rivalries if divisions[rivalry[0]] != divisions[rivalry[1]]]
@@ -39,16 +39,16 @@ while ( len(remaining_div1) > 1 and len(remaining_div2) > 1 ) :
     tup = (rand1, rand2)
     ood_extra.append(tup)
 
-user_team_map = {"kevin": "The Crimson Chins", 
-                "chris": "Seattle Sex Panthers",
+user_team_map = {"kevin": "Historic Shi Tpa Town", 
+                "chris": "Chef John",
                 "justin": "Bottom Bitches", 
-                "robert": "Barbie",
+                "robert": "Ferrari Cake",
                 "greg": "The Jagaloons",
-                "simon": "Immunized",
-                "joe": "Max Keeble",
-                "jeremy": "Fixin' for a Mixon",
-                "sam": "Dumpster Fire",
-                "miller": "J.P. Prewitt"}
+                "simon": "The Slim Reapers",
+                "joe": "Kenneth Walker Sr",
+                "jeremy": "a pimp named slickback",
+                "sam": "Guy Fieri",
+                "miller": "Bobby Flay"}
 
 
 # DEFINE DECISION VARIABLES
